@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -177,6 +178,7 @@ public class AppointmentFragment extends Fragment {
             public void onSuccess(DocumentReference documentReference) {
 
                 Toast.makeText(getActivity(), "Appointment Successfully Booked: " + barber + ", " + service + ", " + datetime, Toast.LENGTH_SHORT).show();
+                GoToProfile();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -188,6 +190,13 @@ public class AppointmentFragment extends Fragment {
             }
         });
 
+    }
+
+    private void GoToProfile() {
+
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new ProfileFragment());
+        ft.commit();
     }
 
     private boolean isInLimitRange(Appointment ap) {

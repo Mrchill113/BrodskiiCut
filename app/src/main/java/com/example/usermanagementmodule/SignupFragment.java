@@ -118,8 +118,9 @@ public class SignupFragment extends Fragment {
     }
     private void CreateUserProfile(String email,String password, String username ,String phone) {
 
-        UserProfile userProfile = new UserProfile("",username,phone);
-        fbs.getFire().collection("Users").document(email).set(userProfile).addOnSuccessListener(new OnSuccessListener<Void>() {
+        UserProfile userProfile = new UserProfile("",username,phone,"user");
+        // make email lower case for data retrieval later! (because the phone saves the current user in json format and so the email is only lower case);
+        fbs.getFire().collection("Users").document(email.toLowerCase()).set(userProfile).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 fbs.getAuth().signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {

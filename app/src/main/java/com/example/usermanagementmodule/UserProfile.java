@@ -4,14 +4,24 @@ public class UserProfile {
     private String pfp;
     private String username;
     private String phone;
+    private String type;
 
-    public UserProfile(String pfp, String username, String phone) {
+    public UserProfile(String pfp, String username, String phone, String type) {
         this.pfp = pfp;
         this.username = username;
         this.phone = phone;
+        this.type = type;
     }
 
     public UserProfile() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getPfp() {

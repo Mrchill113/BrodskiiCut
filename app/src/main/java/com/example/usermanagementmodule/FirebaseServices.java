@@ -11,10 +11,20 @@ public class FirebaseServices {
     private FirebaseFirestore fire;
     private FirebaseStorage storage;
 
+    private UserProfile user;
+
     public FirebaseServices(){
         auth = FirebaseAuth.getInstance();
         fire = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+    }
+
+    public UserProfile getUser() {
+        return user;
+    }
+
+    public void setUser(UserProfile user) {
+        this.user = user;
     }
 
     public FirebaseAuth getAuth() {

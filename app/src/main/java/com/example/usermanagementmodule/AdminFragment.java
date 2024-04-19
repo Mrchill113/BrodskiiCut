@@ -2,30 +2,18 @@ package com.example.usermanagementmodule;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
+ * Use the {@link AdminFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
-
-    FirebaseServices fbs;
-    ArrayList<Appointment> apts;
+public class AdminFragment extends Fragment {
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +25,7 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ProfileFragment() {
+    public AdminFragment() {
         // Required empty public constructor
     }
 
@@ -47,11 +35,11 @@ public class ProfileFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
+     * @return A new instance of fragment AdminFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
+    public static AdminFragment newInstance(String param1, String param2) {
+        AdminFragment fragment = new AdminFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,33 +60,15 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_admin, container, false);
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        fbs= FirebaseServices.getInstance();
-        apts = new ArrayList<Appointment>();
-
-
-        fbs.getFire().collection("Appointments").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
-
-                    Appointment appointment = dataSnapshot.toObject(Appointment.class);
-                    apts.add(appointment);
-
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "Couldn't Retrieve Appointments, Please Try Again Later!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // TODO: Create Admin Functions (Delete Users, Update Certain Info or Approve Customer Service Appointments)!
 
     }
+
 }
