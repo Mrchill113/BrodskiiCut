@@ -45,6 +45,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivRefresh"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="12dp"
+            app:tint="@color/white"
+            android:src="@android:drawable/ic_popup_sync"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -53,6 +64,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcAppointments"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

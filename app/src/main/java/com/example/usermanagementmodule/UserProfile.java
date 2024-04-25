@@ -5,15 +5,25 @@ public class UserProfile {
     private String username;
     private String phone;
     private String type;
+    private int haircuts;
 
     public UserProfile(String pfp, String username, String phone, String type) {
         this.pfp = pfp;
         this.username = username;
         this.phone = phone;
         this.type = type;
+        this.haircuts = 0;
     }
 
     public UserProfile() {
+    }
+
+    public int getHaircuts() {
+        return haircuts;
+    }
+
+    public void setHaircuts(int haircuts) {
+        this.haircuts = haircuts;
     }
 
     public String getType() {

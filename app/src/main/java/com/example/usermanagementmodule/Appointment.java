@@ -18,6 +18,14 @@ public class Appointment {
         this.approved = approved;
     }
 
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
     public String getBarber() {
         return barber;
     }

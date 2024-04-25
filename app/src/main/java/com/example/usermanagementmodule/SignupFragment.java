@@ -137,6 +137,7 @@ public class SignupFragment extends Fragment {
             }
         });
     }
+
     private void gotoLoginFragment(){
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutMain, new LoginFragment());

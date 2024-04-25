@@ -2,6 +2,7 @@ package com.example.usermanagementmodule;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -9,6 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +24,8 @@ import android.widget.ImageView;
 public class HomeFragment extends Fragment {
 
     ImageView ivBeard,ivHaircut,ivHairwash,ivHairdye;
+    FirebaseServices fbs;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,10 +79,35 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        fbs = FirebaseServices.getInstance();
         ivBeard = getView().findViewById(R.id.ivBeardHome);
         ivHaircut = getView().findViewById(R.id.ivHaircutHome);
         ivHairwash = getView().findViewById(R.id.ivHairwashHome);
         ivHairdye = getView().findViewById(R.id.ivHairdyeHome);
+
+
+        if(fbs.getUser() == null) {
+
+            fbs.getFire().collection("Users").document(fbs.getAuth().getCurrentUser().getEmail()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                    UserProfile user = documentSnapshot.toObject(UserProfile.class);
+                    fbs.setUser(user);
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Toast.makeText(getActivity(), "Couldn't Retrieve User Info, Please Try Again Later!", Toast.LENGTH_SHORT).show();
+                    fbs.setUser(null);
+
+                }
+            });
+
+        }
+
 
 
         ivBeard.setOnClickListener(new View.OnClickListener() {

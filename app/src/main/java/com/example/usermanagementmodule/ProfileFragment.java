@@ -4,10 +4,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,7 +30,10 @@ public class ProfileFragment extends Fragment {
 
     FirebaseServices fbs;
     ArrayList<Appointment> apts;
-
+    RecyclerView rcApt;
+    AptAdapter adapter;
+    ImageView ivRefresh;
+    TextView tvUsername, tvHaircut;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,7 +88,16 @@ public class ProfileFragment extends Fragment {
 
         fbs= FirebaseServices.getInstance();
         apts = new ArrayList<Appointment>();
+        rcApt = getView().findViewById(R.id.rcAppointments);
+        ivRefresh = getView().findViewById(R.id.ivRefresh);
+        tvUsername = getView().findViewById(R.id.tvUsername);
+        tvHaircut = getView().findViewById(R.id.tvHaircutsNum);
 
+
+        if(fbs.getUser()!=null) {
+            tvUsername.setText(fbs.getUser().getUsername());
+            tvHaircut.setText(fbs.getUser().getHaircuts());
+        }
 
         fbs.getFire().collection("Appointments").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -92,6 +108,8 @@ public class ProfileFragment extends Fragment {
                     apts.add(appointment);
 
                 }
+
+                SettingRecycler();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -99,6 +117,41 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getActivity(), "Couldn't Retrieve Appointments, Please Try Again Later!", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        ivRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                fbs.getFire().collection("Appointments").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
+
+                            Appointment appointment = dataSnapshot.toObject(Appointment.class);
+                            apts.add(appointment);
+
+                        }
+
+                        SettingRecycler();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "Couldn't Retrieve Appointments, Please Try Again Later!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
+    }
+
+    private void SettingRecycler() {
+
+        rcApt.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new AptAdapter(getActivity(), apts);
+        rcApt.setAdapter(adapter);
 
     }
 }

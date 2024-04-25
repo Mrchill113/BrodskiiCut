@@ -108,6 +108,7 @@ public class LoginFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getActivity(),"Login Successful!",Toast.LENGTH_SHORT).show();
+                            ((MainActivity) getActivity()).getNav().setVisibility(View.VISIBLE);
                             gotoHomeFragment();
 
                         } else {

@@ -4,18 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseServices fbs;
-    String email;
-    UserProfile user;
+    private FirebaseServices fbs;
+
+    private BottomNavigationView nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,30 +28,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fbs = FirebaseServices.getInstance();
+        nav = findViewById(R.id.navApp);
 
 
-        if(fbs.getAuth().getCurrentUser() != null) {
-
-            email = fbs.getAuth().getCurrentUser().getEmail();
-            fbs.getFire().collection("Users").document(email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                    user = documentSnapshot.toObject(UserProfile.class);
-                    fbs.setUser(user);
-                    gotoHomeFragment();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    // user will still be null!
-                    Toast.makeText(MainActivity.this, "Couldn't Retrieve User Data, try again later!", Toast.LENGTH_LONG).show();
-                }
-            });
-
+        if(fbs.getAuth().getCurrentUser() != null) gotoHomeFragment();
+        else {
+            nav.setVisibility(View.GONE);
+            gotoLoginFragment();
         }
-        else gotoLoginFragment();
 
+
+        nav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @SuppressLint("SuspiciousIndentation")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                if(item.getItemId() == R.id.home) gotoHomeFragment();
+                else if (item.getItemId() == R.id.profile) GoToProfile();
+
+                    return true;
+            }
+        });
+
+    }
+
+    private void GoToProfile() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new ProfileFragment());
+        ft.commit();
     }
 
     private void gotoAdminFragment(){
@@ -65,4 +74,7 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
+    public BottomNavigationView getNav() {
+        return nav;
+    }
 }
