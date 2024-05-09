@@ -16,10 +16,10 @@ import java.util.ArrayList;
 public class AptAdapter extends RecyclerView.Adapter<AptAdapter.AptHolder> {
 
     private Context context;
-    private ArrayList<Appointment> apts;
+    private ArrayList<AppointmentID> apts;
     private FirebaseServices fbs;
 
-    public AptAdapter(Context context, ArrayList<Appointment> apts) {
+    public AptAdapter(Context context, ArrayList<AppointmentID> apts) {
         this.context = context;
         this.apts = apts;
     }
@@ -38,7 +38,7 @@ public class AptAdapter extends RecyclerView.Adapter<AptAdapter.AptHolder> {
     @Override
     public void onBindViewHolder(@NonNull AptAdapter.AptHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        Appointment apt = apts.get(position);
+        AppointmentID apt = apts.get(position);
         holder.SetDetails(apt);
 
     }
@@ -65,7 +65,7 @@ public class AptAdapter extends RecyclerView.Adapter<AptAdapter.AptHolder> {
 
         }
 
-        void SetDetails (Appointment apt){
+        void SetDetails (AppointmentID apt){
 
             tvName.setText("Name: " + apt.getBarber());
             tvService.setText("Service: " + apt.getService());

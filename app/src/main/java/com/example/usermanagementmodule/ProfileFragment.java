@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class ProfileFragment extends Fragment {
 
     FirebaseServices fbs;
-    ArrayList<Appointment> apts;
+    ArrayList<AppointmentID> apts;
     RecyclerView rcApt;
     AptAdapter adapter;
     ImageView ivRefresh;
@@ -87,7 +87,7 @@ public class ProfileFragment extends Fragment {
         super.onStart();
 
         fbs= FirebaseServices.getInstance();
-        apts = new ArrayList<Appointment>();
+        apts = new ArrayList<>();
         rcApt = getView().findViewById(R.id.rcAppointments);
         ivRefresh = getView().findViewById(R.id.ivRefresh);
         tvUsername = getView().findViewById(R.id.tvUsername);
@@ -104,7 +104,8 @@ public class ProfileFragment extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
 
-                    Appointment appointment = dataSnapshot.toObject(Appointment.class);
+                    AppointmentID appointment = dataSnapshot.toObject(AppointmentID.class);
+                    appointment.setID(dataSnapshot.getId());
                     apts.add(appointment);
 
                 }
@@ -128,7 +129,8 @@ public class ProfileFragment extends Fragment {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
 
-                            Appointment appointment = dataSnapshot.toObject(Appointment.class);
+                            AppointmentID appointment = dataSnapshot.toObject(AppointmentID.class);
+                            appointment.setID(dataSnapshot.getId());
                             apts.add(appointment);
 
                         }
