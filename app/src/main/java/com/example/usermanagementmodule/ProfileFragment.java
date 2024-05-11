@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,10 +30,10 @@ import java.util.ArrayList;
 public class ProfileFragment extends Fragment {
 
     FirebaseServices fbs;
-    ArrayList<Appointment> apts;
+    ArrayList<AppointmentID> apts;
     RecyclerView rcApt;
     AptAdapter adapter;
-    ImageView ivRefresh;
+    ImageView ivRefresh, ivAdmin;
     TextView tvUsername, tvHaircut;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -87,16 +88,28 @@ public class ProfileFragment extends Fragment {
         super.onStart();
 
         fbs= FirebaseServices.getInstance();
-        apts = new ArrayList<Appointment>();
+        apts = new ArrayList<AppointmentID>();
         rcApt = getView().findViewById(R.id.rcAppointments);
         ivRefresh = getView().findViewById(R.id.ivRefresh);
         tvUsername = getView().findViewById(R.id.tvUsername);
         tvHaircut = getView().findViewById(R.id.tvHaircutsNum);
+        ivAdmin = getView().findViewById(R.id.ivAdmin); ivAdmin.setVisibility(View.INVISIBLE);
 
 
         if(fbs.getUser()!=null) {
             tvUsername.setText(fbs.getUser().getUsername());
-            tvHaircut.setText(fbs.getUser().getHaircuts());
+            tvHaircut.setText(String.valueOf(fbs.getUser().getHaircuts()));
+            if(fbs.getUser().getType().equals("admin")) {
+
+                ivAdmin.setVisibility(View.VISIBLE);
+                ivAdmin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        GoToAdminPage();
+                    }
+                });
+
+            }
         }
 
         fbs.getFire().collection("Appointments").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -104,8 +117,8 @@ public class ProfileFragment extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
 
-                    Appointment appointment = dataSnapshot.toObject(Appointment.class);
-                    apts.add(appointment);
+                    AppointmentID appointment = dataSnapshot.toObject(AppointmentID.class);
+                    if(appointment.getCustomer().equals(fbs.getAuth().getCurrentUser().getEmail())) apts.add(appointment);
 
                 }
 
@@ -122,14 +135,14 @@ public class ProfileFragment extends Fragment {
         ivRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 fbs.getFire().collection("Appointments").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        apts = new ArrayList<AppointmentID>();
                         for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
 
-                            Appointment appointment = dataSnapshot.toObject(Appointment.class);
-                            apts.add(appointment);
+                            AppointmentID appointment = dataSnapshot.toObject(AppointmentID.class);
+                            if(appointment.getCustomer().equals(fbs.getAuth().getCurrentUser().getEmail())) apts.add(appointment);
 
                         }
 
@@ -145,6 +158,12 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+    }
+
+    private void GoToAdminPage() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new AdminFragment());
+        ft.commit();
     }
 
     private void SettingRecycler() {

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,33 +15,41 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class AptAdapter extends RecyclerView.Adapter<AptAdapter.AptHolder> {
+public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdmnHolder> {
 
     private Context context;
-    private ArrayList<AppointmentID> apts;
+    private ArrayList<Appointment> apts;
     private FirebaseServices fbs;
 
-    public AptAdapter(Context context, ArrayList<AppointmentID> apts) {
+    public AdminAdapter(Context context, ArrayList<Appointment> apts) {
+        fbs = FirebaseServices.getInstance();
         this.context = context;
         this.apts = apts;
     }
 
-    public AptAdapter() {
+    public AdminAdapter() {
     }
 
     @NonNull
     @Override
-    public AptHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.appointment_item,parent,false);
+    public AdminAdapter.AdmnHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.admin_item,parent,false);
 
-        return new AptHolder(view);
+        return new AdminAdapter.AdmnHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AptAdapter.AptHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull AdminAdapter.AdmnHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        AppointmentID apt = apts.get(position);
+        Appointment apt = apts.get(position);
         holder.SetDetails(apt);
+
+        holder.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -50,23 +59,23 @@ public class AptAdapter extends RecyclerView.Adapter<AptAdapter.AptHolder> {
     }
 
 
-    class AptHolder extends RecyclerView.ViewHolder {
+    class AdmnHolder extends RecyclerView.ViewHolder {
 
         private TextView tvName, tvService, tvTime, tvApproved;
-        private ImageView ivBarber;
+        private Button btn;
 
-        public AptHolder (@NonNull View itemView) {
+        public AdmnHolder (@NonNull View itemView) {
             super(itemView);
 
+            btn = itemView.findViewById(R.id.btnApprove);
             tvName = itemView.findViewById(R.id.BarberName);
             tvService = itemView.findViewById(R.id.AptService);
             tvTime = itemView.findViewById(R.id.AptTime);
             tvApproved = itemView.findViewById(R.id.Approved);
-            ivBarber = itemView.findViewById(R.id.ivBarberItem);
 
         }
 
-        void SetDetails (AppointmentID apt){
+        void SetDetails (Appointment apt){
 
             tvName.setText("Name: " + apt.getBarber());
             tvService.setText("Service: " + apt.getService());
@@ -80,12 +89,6 @@ public class AptAdapter extends RecyclerView.Adapter<AptAdapter.AptHolder> {
                 tvApproved.setText("No");
                 tvApproved.setTextColor(Color.RED);
             }
-
-            String name = apt.getBarber();
-            if(name.equals("Jacob")) ivBarber.setImageResource(R.drawable.jacob);
-            else if(name.equals("King")) ivBarber.setImageResource(R.drawable.toto);
-            else if(name.equals("Jojo")) ivBarber.setImageResource(R.drawable.jojo);
-            else if(name.equals("Tarbee3")) ivBarber.setImageResource(R.drawable.tarbee3);
 
         }
     }

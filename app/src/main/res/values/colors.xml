@@ -5,5 +5,7 @@
     <color name="darkblue">#17375D</color>
     <color name="lightblue">#A4FBFF</color>
     <color name="pink">#E98DC3</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
 
 </resources>

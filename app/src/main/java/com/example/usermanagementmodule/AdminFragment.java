@@ -2,11 +2,22 @@ package com.example.usermanagementmodule;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,6 +26,10 @@ import android.view.ViewGroup;
  */
 public class AdminFragment extends Fragment {
 
+    FirebaseServices fbs;
+    RecyclerView rc;
+    AdminAdapter adapter;
+    ArrayList<Appointment> apts;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,7 +82,36 @@ public class AdminFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        // TODO: Create Admin Functions (Delete Users, Update Certain Info or Approve Customer Service Appointments)!
+        fbs = FirebaseServices.getInstance();
+        rc = getView().findViewById(R.id.rcAdmin);
+        apts = new ArrayList<>();
+
+        fbs.getFire().collection("Appointments").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
+
+                    Appointment appointment = dataSnapshot.toObject(Appointment.class);
+                    dataSnapshot.getId();
+                    if(!appointment.isApproved()) apts.add(appointment);
+
+                }
+                SettingRecycler();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Couldn't Retrieve Appointments, Please Try Again Later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void SettingRecycler() {
+
+        rc.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new AdminAdapter(getActivity(), apts);
+        rc.setAdapter(adapter);
 
     }
 
