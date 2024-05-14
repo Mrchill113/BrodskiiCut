@@ -26,4 +26,8 @@
 
     </style>
 
+    <style name="MyDatePicker" parent="android:Widget.Material.Light.DatePicker">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

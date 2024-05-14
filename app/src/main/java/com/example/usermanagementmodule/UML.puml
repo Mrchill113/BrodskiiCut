@@ -1,0 +1,298 @@
+@startuml
+class com.example.usermanagementmodule.ProfileFragment {
+~ FirebaseServices fbs
+~ ArrayList<AppointmentID> apts
+~ RecyclerView rcApt
+~ AptAdapter adapter
+~ ImageView ivRefresh
+~ TextView tvUsername
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} ProfileFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+- void GoToAdminPage()
+- void SettingRecycler()
+}
+
+
+class com.example.usermanagementmodule.AptAdapter {
+- Context context
+- ArrayList<AppointmentID> apts
+- FirebaseServices fbs
++ AptHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(AptAdapter.AptHolder,int)
++ int getItemCount()
+}
+
+
+class com.example.usermanagementmodule.AptAdapter$AptHolder {
+- TextView tvName
+- ImageView ivBarber
+~ void SetDetails(AppointmentID)
+}
+
+
+class com.example.usermanagementmodule.ForgotPassFragment {
+- FirebaseServices fbs
+- EditText etEmailForgotPass
+- Button btnReset
+- TextView tvGoBack
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} ForgotPassFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+- void gotoLoginFragment()
+}
+
+
+class com.example.usermanagementmodule.Appointment {
+- String customer
+- String barber
+- String service
+- String dateTime
+- boolean approved
++ String getService()
++ void setService(String)
++ String getBarber()
++ void setBarber(String)
++ String getCustomer()
++ void setCustomer(String)
++ String getDateTime()
++ void setDateTime(String)
++ boolean isApproved()
++ void setApproved(boolean)
++ String toString()
+}
+
+
+class com.example.usermanagementmodule.AdminFragment {
+~ FirebaseServices fbs
+~ RecyclerView rc
+~ AdminAdapter adapter
+~ ArrayList<Appointment> apts
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} AdminFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+- void SettingRecycler()
+}
+
+
+class com.example.usermanagementmodule.SignupFragment {
+- EditText etUsername
+- Button btnSignup
+- FirebaseServices fbs
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} SignupFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+- void CreateUserProfile(String,String,String,String)
+- void gotoLoginFragment()
+}
+
+
+class com.example.usermanagementmodule.SelectBarberFragment {
+~ String Service
+~ ImageView ivJacob
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} SelectBarberFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+}
+
+
+class com.example.usermanagementmodule.UserProfile {
+- String pfp
+- String username
+- String phone
+- String type
+- int haircuts
++ int getHaircuts()
++ void setHaircuts(int)
++ String getType()
++ void setType(String)
++ String getPfp()
++ void setPfp(String)
++ String getUsername()
++ void setUsername(String)
++ String getPhone()
++ void setPhone(String)
++ String toString()
+}
+
+
+class com.example.usermanagementmodule.HomeFragment {
+~ ImageView ivBeard
+~ FirebaseServices fbs
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} HomeFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+}
+
+
+class com.example.usermanagementmodule.AdminAdapter {
+- Context context
+- ArrayList<Appointment> apts
+- FirebaseServices fbs
++ AdminAdapter.AdmnHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(AdminAdapter.AdmnHolder,int)
++ int getItemCount()
+}
+
+
+class com.example.usermanagementmodule.AdminAdapter$AdmnHolder {
+- TextView tvName
+- Button btn
+~ void SetDetails(Appointment)
+}
+
+
+class com.example.usermanagementmodule.MainActivity {
+- FirebaseServices fbs
+- BottomNavigationView nav
+# void onCreate(Bundle)
+- void GoToProfile()
+- void gotoAdminFragment()
+- void gotoHomeFragment()
+- void gotoLoginFragment()
++ BottomNavigationView getNav()
+}
+
+
+class com.example.usermanagementmodule.AppointmentFragment {
+~ FirebaseServices fbs
+- String selectedDateTimeStr
+~ Button btnBook
+~ ImageView ivBarber
+~ TextView tvBarberName
+- DatePicker datePick
+- TimePicker timePick
+- String Barber
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} AppointmentFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
++ void setMinTimePicker()
+- void setCurrentDateTimeStr()
+- void BookAppointment(String,String,String)
+- void GoToProfile()
+- boolean isInLimitRange(Appointment)
+}
+
+
+class com.example.usermanagementmodule.AppointmentID {
+- String customer
+- String barber
+- String service
+- String dateTime
+- boolean approved
+- String ID
++ String getCustomer()
++ void setCustomer(String)
++ String getBarber()
++ void setBarber(String)
++ String getService()
++ void setService(String)
++ String getDateTime()
++ void setDateTime(String)
++ boolean isApproved()
++ void setApproved(boolean)
++ String getID()
++ void setID(String)
++ String toString()
+}
+
+
+class com.example.usermanagementmodule.SetTimeDateFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} SetTimeDateFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+
+class com.example.usermanagementmodule.FirebaseServices {
+- {static} FirebaseServices instance
+- FirebaseAuth auth
+- FirebaseFirestore fire
+- FirebaseStorage storage
+- UserProfile user
++ UserProfile getUser()
++ void setUser(UserProfile)
++ FirebaseAuth getAuth()
++ FirebaseFirestore getFire()
++ FirebaseStorage getStorage()
++ {static} FirebaseServices getInstance()
+}
+
+
+class com.example.usermanagementmodule.LoginFragment {
+- EditText etEmail
+- Button btnLogin
+- TextView tvSignupLink
+- FirebaseServices fbs
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} LoginFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+- void gotoForgotPass()
+- void gotoSignupFragment()
+- void gotoHomeFragment()
+}
+
+
+
+
+androidx.fragment.app.Fragment <|-- com.example.usermanagementmodule.ProfileFragment
+com.example.usermanagementmodule.Adapter <|-- com.example.usermanagementmodule.AptAdapter
+com.example.usermanagementmodule.AptAdapter +.. com.example.usermanagementmodule.AptAdapter$AptHolder
+com.example.usermanagementmodule.ViewHolder <|-- com.example.usermanagementmodule.AptAdapter$AptHolder
+androidx.fragment.app.Fragment <|-- com.example.usermanagementmodule.ForgotPassFragment
+androidx.fragment.app.Fragment <|-- com.example.usermanagementmodule.AdminFragment
+androidx.fragment.app.Fragment <|-- com.example.usermanagementmodule.SignupFragment
+androidx.fragment.app.Fragment <|-- com.example.usermanagementmodule.SelectBarberFragment
+androidx.fragment.app.Fragment <|-- com.example.usermanagementmodule.HomeFragment
+com.example.usermanagementmodule.Adapter <|-- com.example.usermanagementmodule.AdminAdapter
+com.example.usermanagementmodule.AdminAdapter +.. com.example.usermanagementmodule.AdminAdapter$AdmnHolder
+com.example.usermanagementmodule.ViewHolder <|-- com.example.usermanagementmodule.AdminAdapter$AdmnHolder
+androidx.appcompat.app.AppCompatActivity <|-- com.example.usermanagementmodule.MainActivity
+androidx.fragment.app.Fragment <|-- com.example.usermanagementmodule.AppointmentFragment
+androidx.fragment.app.Fragment <|-- com.example.usermanagementmodule.SetTimeDateFragment
+androidx.fragment.app.Fragment <|-- com.example.usermanagementmodule.LoginFragment
+@enduml

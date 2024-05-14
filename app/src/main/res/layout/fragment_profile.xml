@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageViewPFP"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="75dp"
@@ -30,7 +30,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPFP" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivAdmin"
@@ -47,14 +47,17 @@
             android:id="@+id/tvHaircutsNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="25dp"
-            android:text="Number of Haircuts"
+            android:text="Number of Haircuts :"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.354"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
+            app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivRefresh"
@@ -66,6 +69,17 @@
             android:src="@android:drawable/ic_popup_sync"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNumProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="25dp"
+            android:text="TextView"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvHaircutsNum" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

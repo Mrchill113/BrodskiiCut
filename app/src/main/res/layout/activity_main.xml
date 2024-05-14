@@ -23,6 +23,7 @@
         android:background="@color/cardview_dark_background"
         app:itemIconSize="28dp"
         app:menu="@menu/menu"
+        app:labelVisibilityMode="unlabeled"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         />

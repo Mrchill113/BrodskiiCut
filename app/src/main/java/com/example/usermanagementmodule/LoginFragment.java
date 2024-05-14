@@ -27,7 +27,7 @@ public class LoginFragment extends Fragment {
 
     private EditText etEmail, etPassword;
     private Button btnLogin;
-    private TextView tvSignupLink;
+    private TextView tvSignupLink, tvForgotPass;
     private FirebaseServices fbs;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -85,11 +85,18 @@ public class LoginFragment extends Fragment {
         etPassword = getView().findViewById(R.id.etPasswordLogin);
         btnLogin = getView().findViewById(R.id.btnLoginLogin);
         tvSignupLink = getView().findViewById(R.id.tvSignupLinkLogin);
+        tvForgotPass = getView().findViewById(R.id.tvForgotPass);
 
         tvSignupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoSignupFragment();
+            }
+        });
+        tvForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoForgotPass();
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +116,7 @@ public class LoginFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Toast.makeText(getActivity(),"Login Successful!",Toast.LENGTH_SHORT).show();
                             ((MainActivity) getActivity()).getNav().setVisibility(View.VISIBLE);
+                            fbs.setUser(null);
                             gotoHomeFragment();
 
                         } else {
@@ -119,6 +127,12 @@ public class LoginFragment extends Fragment {
                 });
             }
         });
+    }
+
+    private void gotoForgotPass() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new ForgotPassFragment());
+        ft.commit();
     }
 
     private void gotoSignupFragment() {

@@ -178,6 +178,7 @@ public class AppointmentFragment extends Fragment {
             public void onSuccess(DocumentReference documentReference) {
 
                 Toast.makeText(getActivity(), "Appointment Successfully Booked: " + barber + ", " + service + ", " + datetime, Toast.LENGTH_SHORT).show();
+                ((MainActivity) getActivity()).getNav().setSelectedItemId(R.id.profile);
                 GoToProfile();
 
             }

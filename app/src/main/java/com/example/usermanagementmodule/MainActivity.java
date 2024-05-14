@@ -19,8 +19,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseServices fbs;
-
     private BottomNavigationView nav;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(fbs.getAuth().getCurrentUser() != null) gotoHomeFragment();
         else {
-            nav.setVisibility(View.GONE);
-            gotoLoginFragment();
+         nav.setVisibility(View.GONE);
+         gotoLoginFragment();
         }
 
 
@@ -45,11 +45,20 @@ public class MainActivity extends AppCompatActivity {
 
                 if(item.getItemId() == R.id.home) gotoHomeFragment();
                 else if (item.getItemId() == R.id.profile) GoToProfile();
+                else if (item.getItemId() == R.id.logout) Logout();
 
                     return true;
             }
         });
 
+    }
+
+
+    private void Logout() {
+        // Remove Current User instance!
+        fbs.getAuth().signOut();
+        nav.setVisibility(View.GONE);
+        gotoLoginFragment();
     }
 
     private void GoToProfile() {
@@ -59,7 +68,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void gotoAdminFragment(){
-
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutMain, new AdminFragment());
+        ft.commit();
     }
 
     private void gotoHomeFragment() {
@@ -77,4 +88,5 @@ public class MainActivity extends AppCompatActivity {
     public BottomNavigationView getNav() {
         return nav;
     }
+
 }

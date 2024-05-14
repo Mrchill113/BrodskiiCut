@@ -9,9 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
@@ -47,6 +52,49 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdmnHolder> 
         holder.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(!apt.isApproved()) {
+
+                    fbs.getFire().collection("Appointments").document(apt.getID()).update("approved", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+
+                            apts.get(position).setApproved(true);
+
+                            fbs.getFire().collection("Users").document(apt.getCustomer()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    UserProfile user = documentSnapshot.toObject(UserProfile.class);
+                                    fbs.getFire().collection("Users").document(apt.getCustomer()).update("haircuts", user.getHaircuts()+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(context, "Action Completed!", Toast.LENGTH_SHORT).show();
+                                            holder.tvApproved.setText("Yes");
+                                            holder.tvApproved.setTextColor(Color.GREEN);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(context, "Couldn't Update User Info, Please Try Again Later!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(context, "Couldn't Retrieve User Info!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "Couldn't Complete Specified Action!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
 
             }
         });

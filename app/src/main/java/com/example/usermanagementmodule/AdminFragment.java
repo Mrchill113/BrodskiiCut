@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -84,15 +85,15 @@ public class AdminFragment extends Fragment {
 
         fbs = FirebaseServices.getInstance();
         rc = getView().findViewById(R.id.rcAdmin);
-        apts = new ArrayList<>();
+        apts = new ArrayList<Appointment>();
 
-        fbs.getFire().collection("Appointments").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        fbs.getFire().collection("Appointments").orderBy("dateTime", Query.Direction.ASCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot dataSnapshot : queryDocumentSnapshots.getDocuments()) {
 
                     Appointment appointment = dataSnapshot.toObject(Appointment.class);
-                    dataSnapshot.getId();
+                    appointment.setID(dataSnapshot.getId());
                     if(!appointment.isApproved()) apts.add(appointment);
 
                 }

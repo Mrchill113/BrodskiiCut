@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,6 +26,7 @@ public class HomeFragment extends Fragment {
 
     ImageView ivBeard,ivHaircut,ivHairwash,ivHairdye;
     FirebaseServices fbs;
+    TextView tvWelcomeHome, tvUserHome;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -84,6 +86,12 @@ public class HomeFragment extends Fragment {
         ivHaircut = getView().findViewById(R.id.ivHaircutHome);
         ivHairwash = getView().findViewById(R.id.ivHairwashHome);
         ivHairdye = getView().findViewById(R.id.ivHairdyeHome);
+        tvUserHome = getView().findViewById(R.id.tvUserHome);
+        tvWelcomeHome = getView().findViewById(R.id.tvWelcomeHome);
+
+        if(fbs.getUser()!=null) {
+            tvUserHome.setText(fbs.getUser().getUsername());
+        }
 
 
         if(fbs.getUser() == null) {

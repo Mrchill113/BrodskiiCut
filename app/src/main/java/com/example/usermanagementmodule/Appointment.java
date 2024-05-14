@@ -6,6 +6,7 @@ public class Appointment {
     private String service;
     private String dateTime;
     private boolean approved;
+    private String ID;
 
     public Appointment() {
     }
@@ -16,6 +17,16 @@ public class Appointment {
         this.service = service;
         this.dateTime = dateTime;
         this.approved = approved;
+    }
+
+
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getService() {
