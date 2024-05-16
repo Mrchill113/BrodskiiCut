@@ -207,6 +207,10 @@ public class ProfileFragment extends Fragment {
         if (requestCode == 123 && resultCode == getActivity().RESULT_OK && data!=null) {
 
             Uri selectedImageUri = data.getData();
+            ivPFP.setImageURI(selectedImageUri);
+
+            //Utils utlis = Utils.getInstance();
+            //utlis.uploadImage(getActivity(),selectedImageUri);
             uploadImage(selectedImageUri);
 
         }

@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "1032840041486",
-    "firebase_url": "https://usermanagementmodule-205ee-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "usermanagementmodule-205ee",
-    "storage_bucket": "usermanagementmodule-205ee.appspot.com"
+    "project_number": "161692867176",
+    "project_id": "brodskiicut",
+    "storage_bucket": "brodskiicut.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1032840041486:android:deebc50ea7adf2bb39585f",
+        "mobilesdk_app_id": "1:161692867176:android:af1881268e9f4e7fedb9dd",
         "android_client_info": {
           "package_name": "com.example.usermanagementmodule"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB0Ox8BtRZLIFUuxNDrsMq9NRAYn-T0doY"
+          "current_key": "AIzaSyBcMC_HL9yM3WS1ge1Gj54xBfD7f-MS0-Q"
         }
       ],
       "services": {
