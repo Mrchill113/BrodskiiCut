@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -110,6 +111,7 @@ public class ProfileFragment extends Fragment {
 
 
         if(fbs.getUser()!=null) {
+
             tvUsername.setText(fbs.getUser().getUsername());
             tvNumProfile.setText(String.valueOf(fbs.getUser().getHaircuts()));
             if(fbs.getUser().getType().equals("admin")) {
@@ -122,6 +124,13 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
+            }
+
+            String pfp = fbs.getUser().getPfp();
+            if(pfp!=null && !pfp.isEmpty()){
+                Glide.with(getActivity()).load(pfp).into(ivPFP);
+            }else {
+                Glide.with(getActivity()).load(R.drawable.profile_icon).into(ivPFP);
             }
         }
 

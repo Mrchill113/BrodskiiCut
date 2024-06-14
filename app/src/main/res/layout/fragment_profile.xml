@@ -12,14 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageViewPFP"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="75dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundShape.App.50percent"
+            android:src="@drawable/profile_icon"/>
 
         <TextView
             android:id="@+id/tvUsername"

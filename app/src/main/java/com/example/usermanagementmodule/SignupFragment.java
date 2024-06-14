@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +30,7 @@ public class SignupFragment extends Fragment {
     private EditText etUsername, etPassword,etEmail,etPhone;
     private Button btnSignup;
     private FirebaseServices fbs;
+    private ImageView ivBackSignup;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,6 +89,14 @@ public class SignupFragment extends Fragment {
         etUsername = getView().findViewById(R.id.etUsernameSignup);
         etPhone = getActivity().findViewById(R.id.etPhoneSignup);
         btnSignup = getView().findViewById(R.id.btnSignupSignup);
+        ivBackSignup = getView().findViewById(R.id.ivBackSignup);
+
+        ivBackSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoLoginFragment();
+            }
+        });
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +126,7 @@ public class SignupFragment extends Fragment {
             }
         });
     }
+
     private void CreateUserProfile(String email,String password, String username ,String phone) {
 
         UserProfile userProfile = new UserProfile("",username,phone,"user");
